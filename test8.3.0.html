@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Text Editor</title>
+<link rel="stylesheet" href="8.3.0.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+/*
+                   _ooOoo_
+                 o8888888o
+                  88" . "88
+                   (| -_- |)
+                 O\  =  /O
+                 ____/`---'\____
+               .'  \\|     |//  `.
+              /  \\|||  :  |||//  \
+             /  _||||| -:- |||||-  \
+            |   | \\\  -  /// |   |
+            | \_|  ''\---/''  |   |
+            \  .-\__  `-`  ___/-. /
+           ___`. .'  /--.--\  `. . __
+        ."" '<  `.___\_<|>_/___.'  >'"".
+       | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+      \  \ `-.   \_ __\ /__ _/   .-` /  /
+   ======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            佛祖保佑       永无BUG
+*/
+<script src="8.3.0.js"></script>
+</head>
+
+<body>
+  <h2>Interpreted Text Generator</h2>
+  <button onclick="toggleSettings()">添加设置</button>
+  <button onclick="showSaveSettings()">保存设置</button>
+  <button onclick="loadSettings()">加载配置文件</button>
+  <div id="settingsContainer">
+    <input type="text" id="userInput" placeholder="输入按钮文本">
+    <label><input type="checkbox" id="addSpace" checked>添加空格</label>
+    <div style="display: flex; gap: 2px; margin-top: 2px;">
+      <button onclick="createButton()">生成按钮</button>
+      <button onclick="deleteLastButton()">删除按钮</button>
+    </div>
+  </div>
+  <div id="saveSettingsContainer">
+    <input type="text" id="settingsFilename" placeholder="输入配置文件名">
+    <input type="password" id="passwordInput" placeholder="输入密码(可选)">
+    <label><input type="checkbox" id="encryptCheckbox">加密内容</label>
+    <button onclick="saveSettings()">保存设置</button>
+  </div>
+  <div id="buttonContainer"></div>
+  <textarea id="largeInput" placeholder="文本编辑" oninput="updateDisplay(this);" onblur="onTextareaBlur(this);"></textarea>
+  <div id="buttonGroup">
+    <button onclick="undo()">撤销</button>
+    <button onclick="addNewline()">换行</button>
+    <button onclick="clearText()">清除</button>
+    <button onclick="toggleSaveOptions()">保存</button>
+  </div>
+  <div id="saveOptionsContainer" style="display: none; margin-top: 4px;"> 
+    <input type="text" id="filename" placeholder="输入文件名">
+    <input type="text" id="fileFormat" placeholder="输入文件格式" value=".txt">
+    <label><input type="checkbox" id="encryptDownloadCheckbox">加密内容</label>
+  <button onclick="downloadFile()">保存并下载</button> 
+</div>
+  <h3>加载的配置文件:
+    <h3>
+      <ul id="loadedFilesList"></ul>
+<script>
+  document.getElementById('loadedFilesList').addEventListener('click', function (e) {
+    if (e.target.tagName === 'LI') {
+      const filename = e.target.textContent.split('. ')[1];
+      const message = getMessageByFilename(filename);
+      if (message) {
+        alert(message);
+      }
+    }
+  });
+</script>
+</body>
+
+</html>
